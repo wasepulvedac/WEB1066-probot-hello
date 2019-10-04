@@ -16,10 +16,10 @@ install:
   - docker build -t probot-hello .
 script:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build -t node:$NODE_VERSION --build-arg NODE_IMAGE="node:${NODE_VERSION}" .
+  - docker build -t node:$NODE_VERSION --build-arg NODE_IMAGE="node:$(NODE_VERSION)" .
   - docker images
-  - docker tag node:$NODE_VERSION $DOCKER_USERNAME/probot-hello:$NODE_VERSION-${git rev-parse HEAD}
-  - docker push $DOCKER_USERNAME/probot-hello:$NODE_VERSION-${git rev-parse HEAD}
+  - docker tag node:$NODE_VERSION $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
+  - docker push $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
 
 #  - docker run  --rm probot-hello npm run $NPM_TARGET
 #  - docker run -it --rm probot-hello npm run $NPM_TARGET
@@ -33,7 +33,7 @@ jobs:
       name: "Test 8-jesssie"
       install: skip
       script:
-        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-${git rev-parse HEAD}
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
       env:
       - NODE_VERSION=8-jessie
       - NPM_TARGET=test
@@ -42,14 +42,14 @@ jobs:
       name: "Test 8-jesssie"
       install: skip
       script:
-        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-${git rev-parse HEAD}
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
       env:
       - NODE_VERSION=8-jessie
       - NPM_TARGET=coverage
 # after_success:
 #   - set -x -v;
 #     set -e;
-#     if [ "${NPM_TARGET}" = "test"]; then
+#     if [ "$(NPM_TARGET)" = "test"]; then
 #      docker tag probot-hello probot-hello:$(git rev-parse HEAD)
 #     else
 #       echo "skipping docker tag"
