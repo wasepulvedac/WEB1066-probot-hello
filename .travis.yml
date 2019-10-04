@@ -5,8 +5,8 @@ sudo: required
 services:
   - docker
 env:
-  - NODE_VERSION=8-jessie
-  - NODE_VERSION=10-jessie
+  - NODE_VERSION=8-onbuild #8-jessie
+#  - NODE_VERSION=10-jessie
 #  - NODE_VERSION=8-jessie
   # - NPM_TARGET=test
   # - NPM_TARGET=lint
@@ -36,7 +36,7 @@ jobs:
       script:
         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
       env:
-      - NODE_VERSION=8-jessie
+      - NODE_VERSION=8-onbuild #8-jessie
       - NPM_TARGET=test
 
     - stage: npm-targets
@@ -45,7 +45,7 @@ jobs:
       script:
         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
       env:
-      - NODE_VERSION=8-jessie
+      - NODE_VERSION=8-onbuild #8-jessie
       - NPM_TARGET=coverage
 # after_success:
 #   - set -x -v;
