@@ -6,14 +6,15 @@ services:
   - docker
 env:
   - NODE_VERSION=8-jessie
+  - NODE_VERSION=10-jessie
 #  - NODE_VERSION=8-jessie
   # - NPM_TARGET=test
   # - NPM_TARGET=lint
   # - NPM_TARGET=coverage
-before_install:
-  - docker pull node:8-onbuild
-install:
-  - docker build -t probot-hello .
+# before_install:
+#   - docker pull node:8-onbuild
+# install:
+#   - docker build -t probot-hello .
 script:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker build -t node:$NODE_VERSION --build-arg NODE_IMAGE="node:$(NODE_VERSION)" .
@@ -33,7 +34,7 @@ jobs:
       name: "Test 8-jesssie"
       install: skip
       script:
-        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
       env:
       - NODE_VERSION=8-jessie
       - NPM_TARGET=test
