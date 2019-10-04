@@ -21,36 +21,36 @@ script:
   - docker images
   - docker tag node:$NODE_VERSION $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
   - docker push $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
-#
-# #  - docker run  --rm probot-hello npm run $NPM_TARGET
-# #  - docker run -it --rm probot-hello npm run $NPM_TARGET
-# #  - docker run -it --rm probot-hello npm run lint
-# stages:
-#   - test
-#   - npm-targets
-# jobs:
-#   include:
-#     - stage: npm-targets
-#       name: "Test 8-jesssie"
-#       install: skip
-#       script:
-#         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
-#       env:
-#       - NODE_VERSION=8-onbuild #8-jessie
-#       - NPM_TARGET=test
-#
-#     - stage: npm-targets
-#       name: "Test 8-jesssie"
-#       install: skip
-#       script:
-#         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
-#       env:
-#       - NODE_VERSION=8-onbuild #8-jessie
-#       - NPM_TARGET=coverage
-# # after_success:
-# #   - set -x -v;
-# #     set -e;
-# #     if [ "$(NPM_TARGET)" = "test"]; then
-# #      docker tag probot-hello probot-hello:$(git rev-parse HEAD)
-# #     else
-# #       echo "skipping docker tag"
+
+#  - docker run  --rm probot-hello npm run $NPM_TARGET
+#  - docker run -it --rm probot-hello npm run $NPM_TARGET
+#  - docker run -it --rm probot-hello npm run lint
+stages:
+  - test
+  - npm-targets
+jobs:
+  include:
+    - stage: npm-targets
+      name: "Test 8-jesssie"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+      env:
+      - NODE_VERSION=8-onbuild #8-jessie
+      - NPM_TARGET=test
+
+    - stage: npm-targets
+      name: "Test 8-jesssie"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
+      env:
+      - NODE_VERSION=8-onbuild #8-jessie
+      - NPM_TARGET=coverage
+# after_success:
+#   - set -x -v;
+#     set -e;
+#     if [ "$(NPM_TARGET)" = "test"]; then
+#      docker tag probot-hello probot-hello:$(git rev-parse HEAD)
+#     else
+#       echo "skipping docker tag"
