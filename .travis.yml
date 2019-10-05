@@ -15,7 +15,8 @@ env:
 #   - docker pull node:8-onbuild
 # install:
 #   - docker build -t probot-hello .
-script:
+#script:
+before_install:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker build -t node:$NODE_VERSION --build-arg NODE_IMAGE="node:$NODE_VERSION" .
   - docker images
@@ -32,7 +33,7 @@ jobs:
   include:
     - stage: npm-targets
       name: "Test 8-jesssie"
-      install: skip
+      install: true
       script:
         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
       env:
