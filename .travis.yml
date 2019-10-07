@@ -42,7 +42,7 @@ jobs:
 
     - stage: npm-targets
       name: "Test 8-jesssie"
-      install: false
+      install: true
       script:
         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
       env:
@@ -61,7 +61,7 @@ jobs:
 
     - stage: npm-targets
       name: "Test 10-jesssie"
-      install: false
+      install: true
       script:
         - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
       env:
